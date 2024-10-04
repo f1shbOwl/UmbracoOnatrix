@@ -1,0 +1,83 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ProjectItemTemplate>;
+@{
+	Layout = "mainLayout.cshtml";
+    ViewBag.Title = Model.Name;
+
+    
+    var allProjects = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("projectItemTemplate");
+
+    // Hämta alla taggar från alla projekt
+    var allTags = allProjects
+        .SelectMany(p => p.Value<IEnumerable<string>>("categoryTag") ?? Enumerable.Empty<string>())
+        .Distinct(); // Tar bara unika taggar
+
+    
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Title)) 
+{
+    @await Html.PartialAsync("partials/static/breadcrumb.cshtml")
+}
+
+<section class="project-details">
+    <div class="container">
+        
+        <div class="content">
+            <div class="date">
+                <i class="fa-regular fa-calendar-days"></i><span class="date-text">@Model.Value("pageDate")</span>
+            </div>
+            @Model.Value("pageContent")
+            <div class="content-tags">
+            @if(Model.HasValue("categoryTag")) 
+            {
+                <p>Tags: </p>
+                var categoryTags = Model.Value<IEnumerable<string>>("categoryTag"); // Assumes categoryTag is a list of strings
+
+                foreach (var tag in categoryTags)
+                {
+                    <div class="content-tag">
+                        <span>@tag</span>
+                    </div>
+                    
+                }
+            }
+            </div>
+        </div>
+
+        <aside class="aside-right">
+            <h4>@Model.Value("customHeadline")</h4>
+            <div class="tags">
+                <h4>Tags</h4>
+                @if (Model.HasValue("categoryTag"))
+                {
+                    var currentProjectTags = Model.Value<IEnumerable<string>>("categoryTag") ?? Enumerable.Empty<string>();
+                    var uniqueTags = currentProjectTags.Distinct(); // Visa unika taggar för det aktuella projektet
+
+                    // Kolla om det finns några unika taggar att visa
+                    @if (uniqueTags.Any())
+                    {
+                        <div class="tags-list">
+                            @foreach (var tag in allTags)
+                            {
+                                <a class="tag" href="#">@tag</a>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+            <div class="help-you bg-primary">
+                <h4>How can we help you?</h4>
+                <p>Online support 24/7, we are here to<br> help you</p>
+                <div class="email">
+                    <input class="form-input-group" placeholder="E-mail address">
+                    <i class="fa-regular fa-envelope"></i>
+                </div> 
+            </div>
+        </aside>
+
+
+    </div>
+</section>
+
+@await Html.GetBlockGridHtmlAsync(Model.Layout)

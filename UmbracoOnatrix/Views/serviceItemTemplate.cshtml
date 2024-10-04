@@ -1,0 +1,46 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ServiceItemTemplate>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = "mainLayout.cshtml";
+    ViewBag.Title = Model.Name;
+    var image = Model.Value<IPublishedContent>("asideImage")?.Url() ?? "";
+    var showContactForm = Model.Value<bool>("showContactForm");
+    
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Title)) 
+{
+    @await Html.PartialAsync("partials/static/breadcrumb.cshtml")
+}
+
+
+
+<section class="service-details">
+    <div class="container">
+        <aside class="aside-left">
+            <h4>@Model.Value("customHeadline")</h4>
+            <img src="@image" alt="">
+            <p>@Model.Value("asideText")</p>
+            <div class="help-you bg-primary">
+                <h4>How can we help you?</h4>
+                <p>online support 24/7, we are here to<br>
+                help you</p>
+                <div class="email">
+                    <input class="form-input-group" placeholder="E-mail address">
+                    <i class="fa-regular fa-envelope"></i>
+                </div> 
+            </div>
+        </aside>
+        <div class="content">
+            @Model.Value("pageContent")
+        </div>
+    </div>
+</section>
+
+@if (showContactForm) 
+{
+    @await Html.PartialAsync("partials/static/contactForm.cshtml")
+}
+
+@await Html.GetBlockGridHtmlAsync(Model.Layout)

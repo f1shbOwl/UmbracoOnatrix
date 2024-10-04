@@ -1,0 +1,45 @@
+.page-title {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background-color: var(--color-gray);
+
+    .container {
+        
+        h2 {
+            padding-top: 1rem;
+            line-height: 2rem;
+            text-align: center;
+        }
+
+        .breadcrumb {
+            display: flex;
+            padding: 0;
+            justify-content: center;
+            gap: 1rem;
+            
+            .active {
+                color: var(--color-secondary);
+
+            }
+
+            li::marker {
+                content: "";
+            }
+
+            li::after {
+                content: ">";
+                margin-left: 1rem;
+            }
+            
+            li:last-child::after {
+                content: "";
+            }
+
+            li.active::marker {
+                color: var(--color-primary);
+                content: "";
+            }
+
+        }
+    }
+}

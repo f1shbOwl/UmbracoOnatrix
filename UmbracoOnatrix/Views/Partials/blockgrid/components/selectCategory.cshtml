@@ -1,0 +1,25 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridItem>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+
+@{
+    var uniqueName = Model?.Content.Value<string>("uniqueName");
+    var placeHolderText = Model?.Content.Value<string>("placeHolderText");
+    var categorySubjects = Model?.Content.Value<IEnumerable<string>>("categorySubject") ?? Enumerable.Empty<string>();
+    
+    var isRequired = Model.Content.Value<bool>("isRequired");
+    var errorMessage = Model?.Content.Value<string>("errorMessage");
+}
+
+<div id="_@uniqueName" class="form-input-group">
+    <select class="form-label" for="@uniqueName">
+        @foreach (var category in categorySubjects)
+        {
+            <option value="@category">@category</option>
+        }
+    <select>
+
+    @if(isRequired) {
+        <span class="form-input-error">@errorMessage</span>
+    }
+</div>

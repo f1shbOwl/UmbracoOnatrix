@@ -1,0 +1,52 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridItem>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper
+@using Umbraco.Cms.Core.PropertyEditors.ValueConverters;
+
+@{
+
+    var sectionTitle = Model?.Content.Value<string>("sectionTitle") ?? "";
+    var sectionId = sectionTitle?.ToString().ToLower().Trim().Replace(" ", "-");
+
+    var rootContents = UmbracoHelper.ContentAtRoot();
+    var settings = rootContents?.FirstOrDefault(x => x.ContentType.Alias == "settingsPage") ?? null;
+    var officeLocation = settings?.Value<string>("officeLocation") ?? "";
+    var officeEmailAddress = settings?.Value<string>("officeEmailAddress") ?? "";
+    var officePhone = settings?.Value<string>("officePhone") ?? "";
+
+    var colorLabel = Model?.Content?.Value<ColorPickerValueConverter.PickedColor>("backgroundColor")?.Label.ToLower() ?? null;
+    var backgroundColorClass = !string.IsNullOrEmpty(colorLabel) ? $"bg-{colorLabel}" : "";
+    var sectionBackgroundImage = Model?.Content.Value<IPublishedContent>("sectionBackgroundImage")?.Url() ?? null;
+    var contentBackgroundImage = Model?.Content.Value<IPublishedContent>("contentBackgroundImage")?.Url() ?? null;
+}
+
+
+<section id="contact-section" class="@backgroundColorClass">
+    <div class="container">
+    @if(!string.IsNullOrEmpty(sectionBackgroundImage)) 
+    {
+        <img class="background-image" src="@sectionBackgroundImage" alt="@sectionTitle background image" />
+    }
+        <div class="content">
+            <img class="content-image" src="@contentBackgroundImage" alt="@sectionTitle background image" />
+            <div class="heading">
+                <h2>@Model?.Content.Value("sectionTitle")</h2>
+            </div>
+            <div class="details">
+                <div class="office">
+                    <i class="fa-solid fa-location-dot"></i><span>Office location</span>
+                    <p>@officeLocation</p>
+                </div>
+                <div class="phone">
+                    <i class="fa-solid fa-phone"></i><span>Phone number</span>
+                    <p>@officePhone</p>
+                </div>
+                <div class="email">
+                    <i class="fa-solid fa-envelope"></i><span>E-mail address</span>
+                    <p>@officeEmailAddress</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

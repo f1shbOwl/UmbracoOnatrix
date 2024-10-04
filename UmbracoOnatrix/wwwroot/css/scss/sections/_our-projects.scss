@@ -1,0 +1,98 @@
+#our-projects {
+    overflow: hidden;
+    padding-bottom: 5rem;
+    
+
+    .container {
+
+        .headline {
+            margin-bottom: 3rem;
+            
+
+            h6 {
+                margin: 0;
+            }
+
+            h2 {
+                line-height: 1rem;
+            }
+        }
+    }
+
+    .project-showcase {
+        display: flex;
+        width: 100vw;
+
+        a {
+            flex: 1;
+
+            &:hover {
+
+                .content {
+                    transition: 200ms ease-in-out;
+                    background-color: var(--color-primary);
+                    padding: 50px;
+
+                    .header {
+
+    
+                        h6 {
+                            color: var(--color-secondary);
+                            
+                            &::after {
+                                color: var(--color-light);
+                                font-size: 24px;
+                                margin-left: 10px;
+                                transition: 200ms ease-in-out; /* Optional transition for the arrow */
+                            }
+                        }
+                    }
+
+                    .marker {
+                        opacity: 1;
+                    }
+                }
+            }
+
+        }
+
+        .item {
+            position: relative;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+
+            .content {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.4); /* Transparent gray background */
+                color: #fff;
+                padding: 30px;
+
+                .header {
+                    display: flex;
+                    flex-direction: column;
+    
+                    h6 {
+                        color: var(--color-light);
+                        font-size: 18px;
+                    }
+                }
+
+                .marker {
+                    font-size: 40px;
+                    opacity: 0;
+                }
+            }
+        }
+
+    }
+
+}

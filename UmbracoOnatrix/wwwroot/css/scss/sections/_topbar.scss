@@ -1,0 +1,41 @@
+#topbar {
+    
+
+    .container {
+        display: flex;
+
+        .address {
+            display: flex;
+            align-items: center;
+        }
+        
+        .socialmedia {
+            margin-left: auto;
+
+            a {
+                justify-content: center; /* Horisontellt centrerat */
+                color: var(--color-light);
+                border-left: 1px solid gray; /* Border på vänster sida */
+                
+
+                &:hover {
+
+                    i {
+                        transform: rotate(360deg) scale(1.5);
+                        transition: 700ms ease-in-out;
+                    }
+                }
+            }
+
+            a:last-child {
+                border-right: 1px solid gray;
+            }
+
+
+            i {
+                padding: 20px;
+                font-size: 16px;
+            }
+        }
+    }
+}

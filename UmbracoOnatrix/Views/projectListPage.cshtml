@@ -1,0 +1,135 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ProjectListPage>;
+@{
+	Layout = "mainLayout.cshtml";
+    ViewBag.Title = Model?.Value("pageTitle") ?? null;
+
+    var selection = Umbraco.Content(Guid.Parse("d21b7702-6b9c-47d8-a58b-06a5858044cb"))
+    .ChildrenOfType("projectItemTemplate")
+    .Where(x => x.IsVisible());
+
+
+    var itemsPerPage = 6;
+
+    if(!int.TryParse(Context.Request.Query["page"], out int currentPage))
+        currentPage = 1;
+
+    var totalItems = selection?.Count() ?? 0;
+    var pagedItems = selection?.Skip((currentPage - 1 ) * itemsPerPage).Take(itemsPerPage);
+    
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Title)) 
+{
+    @await Html.PartialAsync("partials/static/breadcrumb.cshtml")
+}
+
+<section id="projects-page">
+    <div class="container">
+        @if (!string.IsNullOrEmpty(Model.Value("customHeadline").ToString())) 
+        {
+            <div class="headline">
+                <h2 class="title">@Model.Value("customHeadline")</h2>
+            </div>
+        }
+        <div class="projects">
+        @if (pagedItems != null) 
+        {
+            @foreach (var item in pagedItems) 
+            {
+                var image = item?.Value<IPublishedContent>("thumbnailImage")?.Url() ?? "";
+                var preamble = item?.Value<string>("preamble") ?? "";
+                var pageDate = item?.Value<string>("pageDate") ?? "";
+
+                <div class="items">
+                    <div class="item">
+                        <div class="body">
+                            <img src="@image" alt="@item.Name()">
+                            <div class="content">
+                                <div class="header">
+                                    <h4>@item.Name()</h4>
+                                </div>
+                                <div class="date">
+                                    <i class="fa-regular fa-calendar-days"></i><span class="date-text">@pageDate</span>
+                                </div>
+                                <div class="footer">
+                                    <p>@preamble</p>
+                                </div>
+                                <a href="@item.Url()">Read More<i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        </div>
+        <aside class="aside-right">
+            <h4>@Model.Value("customHeadline")</h4>
+            <div class="tags">
+                <h4>Tags</h4>
+                @if (pagedItems != null)
+                {
+                    var uniqueTags = pagedItems.SelectMany(item => item?.Value<IEnumerable<string>>("categoryTag") ?? Enumerable.Empty<string>())
+                                            .Distinct();
+
+                    // Kolla om det finns några unika taggar att visa
+                    @if (uniqueTags.Any())
+                    {
+                        <div class="tags-list">
+                            @foreach (var tag in uniqueTags)
+                            {
+                                <a class="tag" href="#">@tag</a>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="help-you bg-primary">
+                <h4>How can we help you?</h4>
+                <p>online support 24/7, we are here to<br>
+                help you</p>
+                <div class="email">
+                    <input class="form-input-group" placeholder="E-mail address">
+                    <i class="fa-regular fa-envelope"></i>
+                </div> 
+            </div>
+        </aside>
+
+        <div class="pagination">
+            <div class="container">
+
+                @if (currentPage > 1)
+                {
+                    <a href="?page=@(currentPage - 1)" class="change">Prev</a>
+                }
+                else
+                {
+                    <span class="change inactive">Prev</span>
+                }
+
+                <ul class="pages">
+                @for (int i = 1; i <= Math.Ceiling((decimal)totalItems / itemsPerPage); i++)
+                {
+                    <li class="@((i == currentPage) ? "number active" : "number")">
+                        <a href="?page=@i">@i</a>
+                    </li>
+                }
+                </ul>
+
+                @if (currentPage < Math.Ceiling((decimal)totalItems / itemsPerPage))
+                {
+                    <a class="change" href="?page=@(currentPage + 1)">Next</a>
+                }
+                else
+                {
+                    <span class="change inactive">Next</span>
+                }
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+@await Html.GetBlockGridHtmlAsync(Model.Layout)

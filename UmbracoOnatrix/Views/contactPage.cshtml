@@ -1,0 +1,28 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContactPage>;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = "mainLayout.cshtml";
+    ViewBag.Title = Model.Value("pageTitle");
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Title)) 
+{
+    @await Html.PartialAsync("partials/static/breadcrumb.cshtml")
+}
+
+@await Html.GetBlockGridHtmlAsync(Model.Layout)
+
+<section class="contact-callback">
+    <div class="container">
+        <div class="heading">
+        <h6>@ViewBag.Title</h6>
+        <h2>Let us know about your next project</h2>
+        <p>Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat</p>
+        </div>
+
+        <form onsubmit="handleContactFormSubmit(event)" novalidate>
+            @Html.GetBlockListHtml(Model.ContactForm)
+        </form>
+    </div>
+</section>

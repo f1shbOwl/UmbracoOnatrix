@@ -1,0 +1,60 @@
+#contact-section {
+    
+
+    .container {
+        padding-top: 3rem;
+        display: flex;
+        justify-content: space-between;
+
+        .background-image {
+            z-index: 1;
+
+        }
+
+        .content {
+            
+
+            .content-image {
+                position: absolute;
+                z-index: 0;
+                left: 30%;
+            }
+
+            .details {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+
+                span {
+                    margin-left: 10px;
+                    font-size: 14px;
+                    color: var(--color-default);
+                }
+
+                i {
+                    color: var(--color-secondary);
+                }
+
+                p {
+                    margin-left: 25px;
+                    font-size: 14px;
+                }
+
+                .phone {
+                    
+                    p {
+                        font-style: italic;
+                    }
+
+                }
+
+                .email {
+
+                    p {
+                        font-style: italic;
+                    }
+                }
+            }
+        }
+    }
+}

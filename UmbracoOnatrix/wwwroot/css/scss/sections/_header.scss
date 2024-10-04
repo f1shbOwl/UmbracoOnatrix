@@ -1,0 +1,29 @@
+header {
+
+    .container {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: space-between;
+        
+
+        #navbar {
+            display: flex;
+            margin-top: 0.5rem;
+            
+            .nav-menu {
+                
+
+                a {
+                    font-weight:  700;
+                    margin-left: 3rem;
+                    
+                }
+            }
+        }
+
+    }
+}
+

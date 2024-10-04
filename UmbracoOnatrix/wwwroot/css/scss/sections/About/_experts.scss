@@ -1,0 +1,82 @@
+#expert {
+    padding-top: 5rem;
+
+    .container {
+
+        .team-members {
+
+            .team {
+                display: grid;
+                grid-template-columns: repeat(12, 1fr);
+                gap: 1rem;
+
+                .item:nth-child(1) {
+                    grid-column: span 4;
+                }
+                .item:nth-child(2) {
+                    grid-column: span 4;
+                }
+                .item:nth-child(3) {
+                    grid-column: span 4;
+                }
+                .item:nth-child(4) {
+                    margin-top: 2rem;
+                    grid-column: span 3;
+                }
+                .item:nth-child(5) {
+                    margin-top: 2rem;
+                    grid-column: span 3;
+                }
+                .item:nth-child(6) {
+                    margin-top: 2rem;
+                    grid-column: span 3;
+                }
+                .item:nth-child(7) {
+                    margin-top: 2rem;
+                    grid-column: span 3;
+                }
+                
+                .item {
+                    border: 1px solid #EAEAEA;
+                    padding-bottom: 1rem;
+                    text-align: left;
+
+                    &:hover {
+                        transition: 200ms ease-in-out;
+                        background-color: var(--color-primary);
+                        transform: scale(1.05);
+                        border: none;
+
+                        p {
+                            color: var(--color-secondary);
+                        }
+
+                        span {
+                            color: var(--color-light);
+                        }
+                    }
+                    
+                       
+                    img {
+                        width: 100%;
+                    }
+
+                    p {
+                        margin-bottom: 0;
+                        margin-left: 2rem;
+                        font-weight: 600;
+                    }
+
+                    span {
+                        margin-left: 2rem;
+                        font-weight: 400;
+                        font-size: 13px;
+                        color: #9C9EA6;
+                        
+                    }
+                }
+                    
+            }
+        }
+    }
+}

@@ -1,0 +1,59 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridItem>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.PropertyEditors.ValueConverters;
+@{
+    var sectionTitle = Model?.Content.Value<string>("sectionTitle") ?? "";
+    var customHeadline = Model?.Content.Value<string>("customeHeadline") ?? "";
+
+    var colorLabel = Model?.Content?.Value<ColorPickerValueConverter.PickedColor>("backgroundColor")?.Label.ToLower() ?? null;
+    var backgroundColorClass = !string.IsNullOrEmpty(colorLabel) ? $"bg-{colorLabel}" : "";
+
+
+    var selection = Umbraco.Content(Guid.Parse("db341794-1122-47fb-9208-8f464ea4f5fa"))
+    .ChildrenOfType("serviceItemTemplate")
+    .Where(x => x.IsVisible())
+    .Take(6);
+}
+
+
+
+<section id="services-page">
+     @if (!string.IsNullOrEmpty(backgroundColorClass))
+     {
+        <div class="background @backgroundColorClass">
+            <div class="container">
+                <div class="headline">
+                    <div class="headline">
+                        <h6>@sectionTitle</h6>
+                        <h2 class="title">@Model.Content.Value("customHeadline")</h2>
+                    </div>
+                </div>
+                <div class="services">
+                @if (selection != null) 
+                {
+                    @foreach (var item in selection) 
+                    {
+                        var image = item?.Value<IPublishedContent>("thumbnailImage")?.Url() ?? "";
+                        var preamble = item?.Value<string>("preamble") ?? "";
+
+                        <a href="@item.Url()">
+                            <div class="item">
+                                <div class="header">
+                                    <h4>@item.Name()</h4>
+                                </div>
+                                <div class="body">
+                                    <img src="@image" alt="@item.Name()">
+                                </div>
+                                <div class="footer">
+                                    <p>@preamble</p>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                }
+                </div>
+            </div>
+        </div>
+     }
+</section>

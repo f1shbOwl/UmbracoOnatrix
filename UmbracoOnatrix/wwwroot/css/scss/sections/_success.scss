@@ -1,0 +1,66 @@
+#success {
+    height: 70vh;
+    margin-bottom: 25rem;
+
+    @include desktop {
+        height: 90vh;
+        
+    }
+
+    @include ultra-wide {
+        height: 70vh;
+    }
+
+    .container {
+
+        @include desktop {
+            padding-top: 2rem;
+        }
+
+        @include ultra-wide {
+            padding-top: 5rem;
+        }
+
+        .background-image {
+            position: absolute;
+            right: 5%;
+            top: 15%;
+        }
+
+        .number {
+
+            @include desktop {
+                margin: 0;
+                margin-top: 2rem;
+                font-size: 100px;
+            }
+
+            @include ultra-wide {
+                margin: 0;
+                margin-top: 2rem;
+                font-size: 100px;
+            }
+
+        }
+
+        .text {
+ 
+
+            @include desktop {
+                max-width: 370px;
+                font-size: 18px;
+                margin: 0 auto;
+                margin-top: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            @include  ultra-wide {
+                max-width: 370px;
+                font-size: 18px;
+                margin: 0 auto;
+                margin-top: 1rem;
+            }
+        }
+
+    }
+}
